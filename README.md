@@ -1,6 +1,8 @@
 # Uniswapper
 Testing on a local hardhat fork of the Goerli Testnet. All Uniswap and Token addresses used are specifically for Goerli.  
-<img width="567" alt="image" src="https://user-images.githubusercontent.com/53081208/174892266-0d9d363a-c132-4753-90c8-ab9caa67acf7.png">
+Swapping 1 ETH for the maximum possible amount of [USDC](https://goerli.etherscan.io/token/0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C) using [Uniswap V2 Router 02](https://docs.uniswap.org/protocol/V2/reference/smart-contracts/router-02#swapexactethfortokens).  
+
+<img width="539" alt="image" src="https://user-images.githubusercontent.com/53081208/174892777-ee614dc5-c6c4-43c8-b5b2-dabf94115e84.png">
 
 
 # Advanced Sample Hardhat Project
