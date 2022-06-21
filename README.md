@@ -4,6 +4,7 @@ Swapping 1 ETH for the maximum possible amount of [USDC](https://goerli.ethersca
 
 <img width="539" alt="image" src="https://user-images.githubusercontent.com/53081208/174892777-ee614dc5-c6c4-43c8-b5b2-dabf94115e84.png">
 
+Current iteration with Swap for ETH → USDC deployed to: https://goerli.etherscan.io/address/0xBdFD1D2287579998e48Ccb16A54D0ea6Ba1cff07
 
 # Advanced Sample Hardhat Project
 
