@@ -37,14 +37,21 @@ describe("Uniswapper", function () {
     const usdcBalance = +formatUnits(await uniswapper.getUSDCBalanceOf(await account0.getAddress()), 6)
     console.log("Initial USDC balance", usdcBalance)
 
+    const balance = +formatEther(await account0.getBalance())
+    console.log("Initial ETH balance", balance)
+
     const result = await uniswapper.swapETHForUSDC(parseUnits('0.01', 6), +new Date + 10000, {
-      value: parseEther('1')
+      value: parseEther('0.5')
     })
     await result.wait()
 
     const usdcBalanceFinal = +formatUnits(await uniswapper.getUSDCBalanceOf(await account0.getAddress()), 6)
     console.log("Final USDC balance", usdcBalanceFinal)
 
+    const balanceFinal = +formatEther(await account0.getBalance())
+    console.log("Final ETH balance", balanceFinal)
+
     expect(usdcBalanceFinal).to.be.greaterThan(usdcBalance)
+    expect(balanceFinal).to.be.lessThan(balance)
   })
 });
