@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 // Goerli
 contract Uniswapper {
-    address private uniswapRouter02 =
+    address public uniswapRouter02 =
         0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
     address public usdc = 0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C;
 

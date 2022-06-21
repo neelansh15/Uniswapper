@@ -41,7 +41,7 @@ describe("Uniswapper", function () {
     console.log("Initial ETH balance", balance)
 
     const result = await uniswapper.swapETHForUSDC(parseUnits('0.01', 6), +new Date + 10000, {
-      value: parseEther('0.5')
+      value: parseEther('1')
     })
     await result.wait()
 
