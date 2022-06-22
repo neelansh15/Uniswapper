@@ -82,6 +82,7 @@ describe("Uniswapper", function () {
     const initialLPT = +formatEther(await uniswapper.lptBalanceOf(await account0.getAddress()))
     console.log("User's Initial LPT balance", initialLPT)
 
+    // TODO: Check ETH balance of contract before and after addLiquidity's swap. USDC balance is already logged in the contract
     const result = await uniswapper.addLiquidity(deadline, { value: parseEther('0.1') })
     await result.wait()
 

@@ -70,13 +70,19 @@ contract Uniswapper {
         (uint112 reserves0, uint112 reserves1, ) = pair.getReserves();
 
         uint256 ethAmount = msg.value; // Don't divide here by 1e18, since we need to send as complete uint256 value to Uniswap
-        uint256 finalEthAmount = ethAmount / 2;
 
         // USDC Desired
-        uint256 amountTokenDesired = ((finalEthAmount * reserves1) / reserves0);
-        uint256 amountTokenMin = amountTokenDesired;
+        uint256 amountTokenDesired = (((ethAmount / 2) * reserves1) /
+            reserves0);
 
         console.log("Desired USDC %s", amountTokenDesired);
+
+        IERC20 usdcToken = IERC20(usdc);
+        uint256 contractTokenBalance = usdcToken.balanceOf(address(this));
+        console.log(
+            "Contract's USDC balance before swap %s",
+            contractTokenBalance
+        );
 
         swapETHForUSDC(address(this), amountTokenDesired, deadline);
 
@@ -87,18 +93,16 @@ contract Uniswapper {
             amountTokenDesired + 1 * 10**6 // Approving one more USDC just in case
         );
 
-        IERC20 usdcToken = IERC20(usdc);
-        uint256 contractTokenBalance = usdcToken.balanceOf(address(this));
-
+        contractTokenBalance = usdcToken.balanceOf(address(this));
         console.log(
             "Contract's USDC balance after swap %s",
             contractTokenBalance
         );
 
-        router.addLiquidityETH{value: finalEthAmount}(
+        router.addLiquidityETH{value: ethAmount / 2}(
             usdc,
             amountTokenDesired,
-            amountTokenMin,
+            amountTokenDesired,
             ethAmount,
             msg.sender,
             deadline
