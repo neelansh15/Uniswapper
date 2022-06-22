@@ -40,7 +40,7 @@ describe("Uniswapper", function () {
     const balance = +formatEther(await account0.getBalance())
     console.log("Initial ETH balance", balance)
 
-    const result = await uniswapper.swapETHForUSDC(parseUnits('0.01', 6), +new Date + 10000, {
+    const result = await uniswapper.swapETHForUSDC(await account0.getAddress(), parseUnits('0.01', 6), +new Date + 10000, {
       value: parseEther('1')
     })
     await result.wait()
@@ -64,5 +64,28 @@ describe("Uniswapper", function () {
     console.log("Got pair reserves", {
       reserve0, reserve1
     })
+  })
+
+  /**
+   * It should automatically swap the sent ETH into proportion for the pool and Add Liquidity in exchange for LP tokens
+   */
+  it("Should Add Liquidity in exchange for LP tokens", async function () {
+    let reserves = await uniswapper.getReserves()
+
+    const reserve0 = +formatUnits(reserves[0]) // WETH
+    const reserve1 = +formatUnits(reserves[1], 6) // USDC
+
+    console.log("Reserves Ratio", reserve1 / reserve0)
+
+    const deadline = +new Date + 10000000
+
+    const initialLPT = +formatEther(await uniswapper.lptBalanceOf(await account0.getAddress()))
+    console.log("User's Initial LPT balance", initialLPT)
+
+    const result = await uniswapper.addLiquidity(deadline, { value: parseEther('0.1') })
+    await result.wait()
+
+    const finalLPT = +formatEther(await uniswapper.lptBalanceOf(await account0.getAddress()))
+    console.log("User's Final LPT balance", finalLPT)
   })
 });
