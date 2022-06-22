@@ -52,11 +52,11 @@ contract Uniswapper {
         );
     }
 
-    function getReserves() external view returns (uint256, uint256) {
+    function getReserves() external view returns (uint112, uint112) {
         address pairAddress = factory.getPair(weth, usdc);
         require(pairAddress != address(0), "Pair not found for the tokens");
         IUniswapV2Pair pair = IUniswapV2Pair(pairAddress);
-        (uint256 reserves0, uint256 reserves1, ) = pair.getReserves();
+        (uint112 reserves0, uint112 reserves1, ) = pair.getReserves();
 
         return (reserves0, reserves1);
     }
