@@ -28,7 +28,7 @@ describe("Uniswapper", function () {
     console.log("Got ETH address", ethAddress)
     expect(ethAddress.toLowerCase()).to.equal("0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6")
 
-    const factoryAddress = await uniswapper.uniswapFactory()
+    const factoryAddress = await uniswapper.routerFactory()
     console.log("Got uniswap factory address", factoryAddress)
     expect(factoryAddress.toLowerCase()).to.equal("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f")
   });
@@ -53,5 +53,16 @@ describe("Uniswapper", function () {
 
     expect(usdcBalanceFinal).to.be.greaterThan(usdcBalance)
     expect(balanceFinal).to.be.lessThan(balance)
+  })
+
+  it("Should return weth-usdc pair reserves", async function () {
+    let reserves = await uniswapper.getReserves()
+
+    const reserve0 = +formatUnits(reserves[0]) // WETH
+    const reserve1 = +formatUnits(reserves[1], 6) // USDC
+
+    console.log("Got pair reserves", {
+      reserve0, reserve1
+    })
   })
 });
