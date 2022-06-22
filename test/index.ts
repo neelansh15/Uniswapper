@@ -24,7 +24,7 @@ describe("Uniswapper", function () {
   })
 
   it("Should return uniswap weth and factory address", async function () {
-    const ethAddress = await uniswapper.ethAddress()
+    const ethAddress = await uniswapper.weth()
     console.log("Got ETH address", ethAddress)
     expect(ethAddress.toLowerCase()).to.equal("0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6")
 
