@@ -1,10 +1,15 @@
 # Uniswapper
 Testing on a local hardhat fork of the Goerli Testnet. All Uniswap and Token addresses used are specifically for Goerli.  
 Swapping 1 ETH for the maximum possible amount of [USDC](https://goerli.etherscan.io/token/0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C) using [Uniswap V2 Router 02](https://docs.uniswap.org/protocol/V2/reference/smart-contracts/router-02#swapexactethfortokens).  
+Adding Liquidity to WETH-USDC pool on Uniswap.  
 
-<img width="539" alt="image" src="https://user-images.githubusercontent.com/53081208/174892777-ee614dc5-c6c4-43c8-b5b2-dabf94115e84.png">
+<img width="633" alt="image" src="https://user-images.githubusercontent.com/53081208/175785673-4d4ce1ca-922f-412c-8152-3fcaf93f5a87.png">
 
-Current iteration with Swap for ETH → USDC deployed to: https://goerli.etherscan.io/address/0xBdFD1D2287579998e48Ccb16A54D0ea6Ba1cff07
+Current iteration with 
+1) Swap for ETH → USDC
+2) Add Liquidity to WETH-USDC pool by only supplying ETH  
+
+is deployed to: https://goerli.etherscan.io/address/0x62dee3890BAe427f52BDC635D6076Fb21F3b4eb0
 
 # Advanced Sample Hardhat Project
 
