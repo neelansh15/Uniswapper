@@ -72,15 +72,7 @@ describe("Uniswapper", function () {
    * NOTE: Important that we're sending ETH and the erc20 token is WETH
    */
   it("Should Add Liquidity in exchange for LP tokens", async function () {
-    let reserves = await uniswapper.getReserves()
-
-    // const weth = new ethers.Contract('0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6', ERC20.abi, account0)
     const usdc = new ethers.Contract('0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C', ERC20.abi, account0)
-
-    const reserve0 = +formatUnits(reserves[0]) // WETH
-    const reserve1 = +formatUnits(reserves[1], 6) // USDC
-
-    console.log("Reserves Ratio", reserve1 / reserve0)
 
     const deadline = +new Date + 10000000
 
@@ -108,7 +100,5 @@ describe("Uniswapper", function () {
     const finalContractETH = +formatUnits(await uniswapper.provider.getBalance(uniswapper.address))
     console.log("Contract's Final ETH balance", finalContractETH)
 
-    const approvedUSDC = +formatUnits(await usdc.allowance(uniswapper.address, '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'), 6)
-    console.log("Allowance of contract's USDC to UniswapRouterV2", approvedUSDC)
   })
 });

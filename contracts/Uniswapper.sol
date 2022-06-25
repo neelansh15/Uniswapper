@@ -7,8 +7,6 @@ import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "./TransferHelper.sol";
 
-import "hardhat/console.sol";
-
 // Goerli
 // Operating on WETH-USDC pair
 contract Uniswapper {
@@ -82,12 +80,10 @@ contract Uniswapper {
     function addLiquidity(uint256 deadline) external payable {
         (uint112 reserves0, uint112 reserves1, ) = pair.getReserves();
 
-        uint256 ethAmount = msg.value; // Don't divide here by 1e18, since we need to send as complete uint256 value to Uniswap
+        uint256 ethAmount = msg.value;
 
         uint256 amountTokenDesired = (((ethAmount / 2) * reserves1) /
             reserves0);
-
-        console.log("Desired USDC %s", amountTokenDesired);
 
         swapETHForUSDC(address(this), ethAmount / 2, 0, deadline);
 
@@ -99,6 +95,8 @@ contract Uniswapper {
             msg.sender,
             deadline
         );
+
+        // TODO: Refund any weth or usdc back to user
     }
 
     function lptBalanceOf(address _account) external view returns (uint256) {
