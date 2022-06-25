@@ -30,6 +30,18 @@ contract Uniswapper {
         address pairAddress = factory.getPair(weth, usdc);
         require(pairAddress != address(0), "Pair not found for the tokens");
         pair = IUniswapV2Pair(pairAddress);
+
+        // Approve router to access this contract's WETH & USDC
+        TransferHelper.safeApprove(
+            weth,
+            uniswapRouter02,
+            2**256 - 1 // Max uint256
+        );
+        TransferHelper.safeApprove(
+            usdc,
+            uniswapRouter02,
+            2**256 - 1 // Max uint256
+        );
     }
 
     function routerFactory() external view returns (address) {
@@ -47,13 +59,14 @@ contract Uniswapper {
 
     function swapETHForUSDC(
         address to,
+        uint256 amountIn,
         uint256 amountOutMin,
         uint256 deadline
     ) public payable {
         address[] memory path = new address[](2);
         path[0] = weth;
         path[1] = usdc;
-        router.swapExactETHForTokens{value: msg.value}(
+        router.swapExactETHForTokens{value: amountIn}(
             amountOutMin,
             path,
             to,
@@ -71,38 +84,17 @@ contract Uniswapper {
 
         uint256 ethAmount = msg.value; // Don't divide here by 1e18, since we need to send as complete uint256 value to Uniswap
 
-        // USDC Desired
         uint256 amountTokenDesired = (((ethAmount / 2) * reserves1) /
             reserves0);
 
         console.log("Desired USDC %s", amountTokenDesired);
 
-        IERC20 usdcToken = IERC20(usdc);
-        uint256 contractTokenBalance = usdcToken.balanceOf(address(this));
-        console.log(
-            "Contract's USDC balance before swap %s",
-            contractTokenBalance
-        );
-
-        swapETHForUSDC(address(this), amountTokenDesired, deadline);
-
-        // Approve router to access this contract's USDC
-        TransferHelper.safeApprove(
-            usdc,
-            uniswapRouter02,
-            amountTokenDesired + 1 * 10**6 // Approving one more USDC just in case
-        );
-
-        contractTokenBalance = usdcToken.balanceOf(address(this));
-        console.log(
-            "Contract's USDC balance after swap %s",
-            contractTokenBalance
-        );
+        swapETHForUSDC(address(this), ethAmount / 2, 0, deadline);
 
         router.addLiquidityETH{value: ethAmount / 2}(
             usdc,
             amountTokenDesired,
-            amountTokenDesired,
+            0,
             ethAmount,
             msg.sender,
             deadline

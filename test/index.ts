@@ -3,6 +3,7 @@ import { expect } from "chai";
 import { formatEther, formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 import { Uniswapper } from "../typechain";
+import ERC20 from '@uniswap/v2-core/build/IERC20.json'
 
 // Goerli
 describe("Uniswapper", function () {
@@ -40,7 +41,7 @@ describe("Uniswapper", function () {
     const balance = +formatEther(await account0.getBalance())
     console.log("Initial ETH balance", balance)
 
-    const result = await uniswapper.swapETHForUSDC(await account0.getAddress(), parseUnits('0.01', 6), +new Date + 10000, {
+    const result = await uniswapper.swapETHForUSDC(await account0.getAddress(), parseEther('1'), parseUnits('0.01', 6), +new Date + 10000, {
       value: parseEther('1')
     })
     await result.wait()
@@ -68,9 +69,13 @@ describe("Uniswapper", function () {
 
   /**
    * It should automatically swap the sent ETH into proportion for the pool and Add Liquidity in exchange for LP tokens
+   * NOTE: Important that we're sending ETH and the erc20 token is WETH
    */
   it("Should Add Liquidity in exchange for LP tokens", async function () {
     let reserves = await uniswapper.getReserves()
+
+    // const weth = new ethers.Contract('0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6', ERC20.abi, account0)
+    const usdc = new ethers.Contract('0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C', ERC20.abi, account0)
 
     const reserve0 = +formatUnits(reserves[0]) // WETH
     const reserve1 = +formatUnits(reserves[1], 6) // USDC
@@ -79,14 +84,31 @@ describe("Uniswapper", function () {
 
     const deadline = +new Date + 10000000
 
+    // Initial balances
     const initialLPT = +formatEther(await uniswapper.lptBalanceOf(await account0.getAddress()))
     console.log("User's Initial LPT balance", initialLPT)
 
-    // TODO: Check ETH balance of contract before and after addLiquidity's swap. USDC balance is already logged in the contract
+    const initialContractETH = +formatUnits(await uniswapper.provider.getBalance(uniswapper.address))
+    console.log("Contract's Initial ETH balance", initialContractETH)
+
+    const initialContractUSDC = +formatUnits(await usdc.balanceOf(uniswapper.address), 6)
+    console.log("Contract's Initial USDC balance", initialContractUSDC)
+
+    // Main
     const result = await uniswapper.addLiquidity(deadline, { value: parseEther('0.1') })
     await result.wait()
 
+    // Final balances
     const finalLPT = +formatEther(await uniswapper.lptBalanceOf(await account0.getAddress()))
     console.log("User's Final LPT balance", finalLPT)
+
+    const finalContractUSDC = +formatUnits(await usdc.balanceOf(uniswapper.address), 6)
+    console.log("Contract's Final USDC balance", finalContractUSDC)
+
+    const finalContractETH = +formatUnits(await uniswapper.provider.getBalance(uniswapper.address))
+    console.log("Contract's Final ETH balance", finalContractETH)
+
+    const approvedUSDC = +formatUnits(await usdc.allowance(uniswapper.address, '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'), 6)
+    console.log("Allowance of contract's USDC to UniswapRouterV2", approvedUSDC)
   })
 });
