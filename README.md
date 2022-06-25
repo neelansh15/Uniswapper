@@ -10,7 +10,7 @@ Current iteration with
 1) Swap for ETH → USDC
 2) Add Liquidity to WETH-USDC pool by only supplying ETH  
 
-is deployed to: https://goerli.etherscan.io/address/0x62dee3890BAe427f52BDC635D6076Fb21F3b4eb0
+is deployed to: https://goerli.etherscan.io/address/0xF5ca8778edab3C08897791A37c03AE0ccE525115
 
 
 **Example transaction of adding liquidity with Uniswapper:** https://goerli.etherscan.io/tx/0x218f6c49bf327d3edc68f322c36d496001710b3bd89083ce6d0704d38d7f3af2  

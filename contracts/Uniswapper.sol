@@ -46,11 +46,7 @@ contract Uniswapper {
         return router.factory();
     }
 
-    function getUSDCBalanceOf(address _account)
-        external
-        view
-        returns (uint256)
-    {
+    function getUSDCBalanceOf(address _account) public view returns (uint256) {
         IERC20 usdcToken = IERC20(usdc);
         return usdcToken.balanceOf(_account);
     }
@@ -96,7 +92,16 @@ contract Uniswapper {
             deadline
         );
 
-        // TODO: Refund any weth or usdc back to user
+        // Refund any weth or usdc back to user (Amount that wasn't sent to router or similar)
+        uint256 usdcBalance = getUSDCBalanceOf(address(this));
+        if (usdcBalance > 0) {
+            IERC20 usdcToken = IERC20(usdc);
+            usdcToken.transfer(msg.sender, usdcBalance);
+        }
+
+        if (address(this).balance > 0) {
+            msg.sender.call{value: address(this).balance};
+        }
     }
 
     function lptBalanceOf(address _account) external view returns (uint256) {

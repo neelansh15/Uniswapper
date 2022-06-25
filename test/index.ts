@@ -100,5 +100,8 @@ describe("Uniswapper", function () {
     const finalContractETH = +formatUnits(await uniswapper.provider.getBalance(uniswapper.address))
     console.log("Contract's Final ETH balance", finalContractETH)
 
+    const usdcBalanceFinal = +formatUnits(await uniswapper.getUSDCBalanceOf(await account0.getAddress()), 6)
+    console.log("User's final USDC balance", usdcBalanceFinal)
+
   })
 });
