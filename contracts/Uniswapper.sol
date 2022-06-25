@@ -30,16 +30,8 @@ contract Uniswapper {
         pair = IUniswapV2Pair(pairAddress);
 
         // Approve router to access this contract's WETH & USDC
-        TransferHelper.safeApprove(
-            weth,
-            uniswapRouter02,
-            2**256 - 1 // Max uint256
-        );
-        TransferHelper.safeApprove(
-            usdc,
-            uniswapRouter02,
-            2**256 - 1 // Max uint256
-        );
+        TransferHelper.safeApprove(weth, uniswapRouter02, type(uint256).max);
+        TransferHelper.safeApprove(usdc, uniswapRouter02, type(uint256).max);
     }
 
     function routerFactory() external view returns (address) {
