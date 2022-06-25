@@ -69,7 +69,7 @@ describe("Uniswapper", function () {
 
   /**
    * It should automatically swap the sent ETH into proportion for the pool and Add Liquidity in exchange for LP tokens
-   * NOTE: Important that we're sending ETH and the erc20 token is WETH
+   * NOTE: Important that we're sending ETH and the erc20 token is WETH. Uniswap considers WETH as ETH so the pool is ETH-USDC in the end
    */
   it("Should Add Liquidity in exchange for LP tokens", async function () {
     const usdc = new ethers.Contract('0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C', ERC20.abi, account0)
