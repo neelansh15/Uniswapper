@@ -4,8 +4,6 @@ Testing on a local hardhat fork of the Goerli Testnet. All Uniswap and Token add
 Swapping 1 ETH for the maximum possible amount of [USDC](https://goerli.etherscan.io/token/0xD87Ba7A50B2E7E660f678A895E4B72E7CB4CCd9C) using [Uniswap V2 Router 02](https://docs.uniswap.org/protocol/V2/reference/smart-contracts/router-02#swapexactethfortokens).  
 Adding Liquidity to WETH-USDC pool on Uniswap by supplying just ETH.  
 
-Example transaction of adding liquidity with Uniswapper: https://goerli.etherscan.io/tx/0x218f6c49bf327d3edc68f322c36d496001710b3bd89083ce6d0704d38d7f3af2. 
-
 <img width="633" alt="image" src="https://user-images.githubusercontent.com/53081208/175785673-4d4ce1ca-922f-412c-8152-3fcaf93f5a87.png">
 
 Current iteration with 
@@ -13,6 +11,13 @@ Current iteration with
 2) Add Liquidity to WETH-USDC pool by only supplying ETH  
 
 is deployed to: https://goerli.etherscan.io/address/0x62dee3890BAe427f52BDC635D6076Fb21F3b4eb0
+
+
+**Example transaction of adding liquidity with Uniswapper:** https://goerli.etherscan.io/tx/0x218f6c49bf327d3edc68f322c36d496001710b3bd89083ce6d0704d38d7f3af2  
+
+Result:  
+<img width="716" alt="image" src="https://user-images.githubusercontent.com/53081208/175786506-6f035f7e-6c86-4c53-854e-d95c14a06183.png">
+
 
 # Advanced Sample Hardhat Project
 
